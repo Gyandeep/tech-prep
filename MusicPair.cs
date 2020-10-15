@@ -99,10 +99,46 @@ Explanation
 There are three pairs of songs that end in whole minutes. They are (0, 1), (1, 2) and (0, 2).
 */
 
+using System.Collections.Generic;
+
 public class MusicPairs
 {
     public int FindMusicPairs(int[] songs)
     {
-        return 0;
+        int noOfPairs = 0;
+
+        if (songs == null || songs.Length <= 1)
+        {
+            return noOfPairs;
+        }
+
+        Dictionary<int, int> map = new Dictionary<int, int>();
+
+        for (int i = 0; i < songs.Length; i++)
+        {
+            int n = songs[i] % 60;
+            var extra = 60 - n;
+
+            if (extra == 60)
+            {
+                extra = 0;
+            }
+
+            if (map.ContainsKey(extra))
+            {
+                noOfPairs += map[extra];
+            }
+
+            if (map.ContainsKey(n))
+            {
+                map[n] += 1;
+            }
+            else
+            {
+                map.Add(n, 1);
+            }
+        }
+
+        return noOfPairs;
     }
 }
